@@ -2,10 +2,8 @@ import { useAppConfig } from '@pubkey-program-sandbox/web-core-data-access'
 import { createContext, ReactNode, useContext, useMemo } from 'react'
 
 export interface Cluster {
-  name: string
   endpoint: string
   network?: ClusterNetwork
-  active?: boolean
 }
 
 export enum ClusterNetwork {
@@ -35,14 +33,11 @@ export interface ClusterProviderContext {
 const Context = createContext<ClusterProviderContext>({} as ClusterProviderContext)
 
 export function ClusterProvider({ children }: { children: ReactNode }) {
-  const { appConfig } = useAppConfig()
+  const {
+    solana: { endpoint },
+  } = useAppConfig()
 
-  const cluster: Cluster = useMemo(() => {
-    const endpoint = appConfig?.solanaEndpoint ?? ''
-    const network = guessNetwork(endpoint)
-
-    return { name: network, active: true, endpoint, network }
-  }, [appConfig])
+  const cluster: Cluster = useMemo(() => ({ endpoint, network: guessNetwork(endpoint) }), [endpoint])
 
   const value: ClusterProviderContext = {
     cluster,

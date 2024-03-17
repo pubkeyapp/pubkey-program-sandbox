@@ -45,5 +45,6 @@ export const validationSchema = Joi.object({
   SESSION_SECRET: Joi.string().required(),
   SOLANA_ENDPOINT: Joi.string().required().error(new Error(`SOLANA_ENDPOINT is required.`)),
   SOLANA_ENDPOINT_PUBLIC: Joi.string().default(process.env['SOLANA_ENDPOINT']),
+  SOLANA_FEE_PAYER_SECRET: Joi.string().required().error(new Error(`SOLANA_FEE_PAYER_SECRET is required.`)),
   SYNC_DRY_RUN: Joi.boolean().default(false),
 })

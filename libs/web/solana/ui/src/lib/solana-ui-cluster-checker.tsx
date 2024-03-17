@@ -30,7 +30,7 @@ export function SolanaUiClusterChecker({ children }: { children: ReactNode }) {
         message={
           <Group justify="center">
             <Text>
-              Error connecting to cluster <strong>{cluster.name}</strong>
+              Error connecting to cluster <strong>{cluster.network}</strong>
             </Text>
             <Button variant="light" color="yellow" size="xs" onClick={() => query.refetch()}>
               Refresh

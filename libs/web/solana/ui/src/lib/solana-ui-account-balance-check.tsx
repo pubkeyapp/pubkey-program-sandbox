@@ -1,5 +1,5 @@
 import { Button, Group, Text } from '@mantine/core'
-import { useRequestAirdrop, useCluster, useGetBalance } from '@pubkey-program-sandbox/web-solana-data-access'
+import { useCluster, useGetBalance, useRequestAirdrop } from '@pubkey-program-sandbox/web-solana-data-access'
 import { UiWarning } from '@pubkey-ui/core'
 import { PublicKey } from '@solana/web3.js'
 import { IconUserOff } from '@tabler/icons-react'
@@ -24,7 +24,7 @@ export function SolanaUiAccountBalanceCheck({ address }: { address: PublicKey })
         message={
           <Group justify="center">
             <Text>
-              You are connected to <strong>{cluster.name}</strong> but your account is not found on this cluster.
+              You are connected to <strong>{cluster.network}</strong> but your account is not found on this cluster.
             </Text>
             <Button
               variant="light"

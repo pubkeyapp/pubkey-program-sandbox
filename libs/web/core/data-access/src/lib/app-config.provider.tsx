@@ -13,6 +13,10 @@ export interface AuthProviderContext {
   appConfig?: AppConfig | undefined
   authEnabled: boolean
   enabledProviders: IdentityProvider[]
+  solana: {
+    endpoint: string
+    feePayer: string
+  }
 }
 
 const Context = createContext<AuthProviderContext>({} as AuthProviderContext)
@@ -58,6 +62,10 @@ export function AppConfigProvider({ children }: { children: ReactNode }) {
     appConfig,
     authEnabled,
     enabledProviders,
+    solana: {
+      endpoint: appConfig?.solanaEndpoint ?? '',
+      feePayer: appConfig?.solanaFeePayer ?? '',
+    },
   }
 
   return <Context.Provider value={value}>{children}</Context.Provider>

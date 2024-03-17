@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { IdentityProvider } from '@prisma/client'
+import { Keypair } from '@solana/web3.js'
 import { CookieOptions } from 'express-serve-static-core'
 import { AppConfig } from '../entity/app-config.entity'
 import { ApiCoreConfig } from './configuration'
@@ -24,6 +25,7 @@ export class ApiCoreConfigService {
       authSolanaEnabled: this.authSolanaEnabled,
       authTwitterEnabled: this.authTwitterEnabled,
       solanaEndpoint: this.solanaEndpointPublic,
+      solanaFeePayer: this.solanaFeePayer.publicKey.toString(),
     }
   }
 
@@ -237,6 +239,10 @@ export class ApiCoreConfigService {
 
   get solanaEndpointPublic(): string {
     return this.service.get<string>('solanaEndpointPublic') as string
+  }
+
+  get solanaFeePayer(): Keypair {
+    return this.service.get<Keypair>('solanaFeePayer') as Keypair
   }
 
   get webUrl(): string {
