@@ -74,6 +74,9 @@ dependencies:
   '@prisma/client':
     specifier: 5.8.0
     version: 5.8.0(prisma@5.8.0)
+  '@pubkey-program-library/anchor':
+    specifier: ^0.0.1
+    version: 0.0.1
   '@pubkey-program-library/sdk':
     specifier: ^1.0.0
     version: 1.0.0

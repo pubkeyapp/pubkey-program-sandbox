@@ -179,6 +179,11 @@ input ProfileUserUpdateInput {
   username: String
 }
 
+enum PubKeyIdentityProvider {
+  Discord
+  Solana
+}
+
 type Query {
   adminFindManyIdentity(input: IdentityAdminFindManyInput!): [Identity!]
   adminFindManyProfile(input: ProfileAdminFindManyInput!): ProfilePaging!
@@ -188,6 +193,14 @@ type Query {
   anonRequestIdentityChallenge(input: IdentityRequestChallengeInput!): IdentityChallenge
   appConfig: AppConfig!
   me: User
+  profileGetPointer(account: String!): JSON
+  profileGetPointerPda(provider: PubKeyIdentityProvider!, providerId: String!): JSON
+  profileGetPointers: JSON
+  profileGetProfile(account: String!): JSON
+  profileGetProfileByUsername(username: String!): JSON
+  profileGetProfilePda(username: String!): JSON
+  profileGetProfiles: JSON
+  profileGetProgramAccount: JSON
   uptime: Float!
   userFindManyIdentity(input: IdentityUserFindManyInput!): [Identity!]
   userFindManyProfile(input: ProfileUserFindManyInput!): ProfilePaging!

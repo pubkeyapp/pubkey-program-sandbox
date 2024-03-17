@@ -23,6 +23,7 @@ export function WebCoreLayout({ children }: { children: ReactNode }) {
           links={[
             { link: '/dashboard', label: 'Dashboard' },
             { link: '/profiles', label: 'Profiles' },
+            { link: '/profile-program', label: 'Profile Program' },
             { link: '/solana', label: 'Solana' },
           ]}
           profile={

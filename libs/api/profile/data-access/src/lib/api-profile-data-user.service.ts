@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common'
+import { ApiProfileDataService } from './api-profile-data.service'
 import { ProfileUserCreateInput } from './dto/profile-user-create.input'
 import { ProfileUserFindManyInput } from './dto/profile-user-find-many.input'
 import { ProfileUserUpdateInput } from './dto/profile-user-update.input'
 import { ProfilePaging } from './entity/profile.entity'
 import { getProfileWhereUserInput } from './helpers/get-profile-where-user.input'
-import { ApiProfileDataService } from './api-profile-data.service'
 
 @Injectable()
 export class ApiProfileDataUserService {

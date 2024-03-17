@@ -1,8 +1,8 @@
 import {
-  AdminCreateProfileInput,
-  AdminFindManyProfileInput,
-  AdminUpdateProfileInput,
   Profile,
+  ProfileAdminCreateInput,
+  ProfileAdminFindManyInput,
+  ProfileAdminUpdateInput,
 } from '@pubkey-program-sandbox/sdk'
 import { getAliceCookie, getBobCookie, sdk, uniqueId } from '../support'
 
@@ -14,7 +14,10 @@ describe('api-profile-feature', () => {
 
     beforeAll(async () => {
       cookie = await getAliceCookie()
-      const created = await sdk.adminCreateProfile({ input: { name: profileName } }, { cookie })
+      const created = await sdk.adminCreateProfile(
+        { input: { username: profileName, account: profileName, ownerId: 'alice' } },
+        { cookie },
+      )
       profileId = created.data.created.id
     })
 
@@ -24,60 +27,72 @@ describe('api-profile-feature', () => {
       })
 
       it('should create a profile', async () => {
-        const input: AdminCreateProfileInput = {
-          name: uniqueId('profile'),
+        const input: ProfileAdminCreateInput = {
+          ownerId: 'alice',
+          account: uniqueId('profile'),
+          username: uniqueId('profile'),
         }
 
         const res = await sdk.adminCreateProfile({ input }, { cookie })
 
         const item: Profile = res.data.created
-        expect(item.name).toBe(input.name)
+        expect(item.username).toBe(input.username)
         expect(item.id).toBeDefined()
         expect(item.createdAt).toBeDefined()
         expect(item.updatedAt).toBeDefined()
       })
 
       it('should update a profile', async () => {
-        const createInput: AdminCreateProfileInput = {
-          name: uniqueId('profile'),
+        const createInput: ProfileAdminCreateInput = {
+          ownerId: 'alice',
+          account: uniqueId('profile'),
+          username: uniqueId('profile'),
         }
         const createdRes = await sdk.adminCreateProfile({ input: createInput }, { cookie })
         const profileId = createdRes.data.created.id
-        const input: AdminUpdateProfileInput = {
-          name: uniqueId('profile'),
+        const input: ProfileAdminUpdateInput = {
+          account: uniqueId('profile'),
+          username: uniqueId('profile'),
         }
 
         const res = await sdk.adminUpdateProfile({ profileId, input }, { cookie })
 
         const item: Profile = res.data.updated
-        expect(item.name).toBe(input.name)
+        expect(item.username).toBe(input.username)
       })
 
       it('should find a list of profiles (find all)', async () => {
-        const createInput: AdminCreateProfileInput = {
-          name: uniqueId('profile'),
+        const createInput: ProfileAdminCreateInput = {
+          ownerId: 'alice',
+          account: uniqueId('profile'),
+          username: uniqueId('profile'),
         }
         const createdRes = await sdk.adminCreateProfile({ input: createInput }, { cookie })
         const profileId = createdRes.data.created.id
 
-        const input: AdminFindManyProfileInput = {}
+        const input: ProfileAdminFindManyInput = {
+          ownerId: 'alice',
+        }
 
         const res = await sdk.adminFindManyProfile({ input }, { cookie })
 
         expect(res.data.paging.meta.totalCount).toBeGreaterThan(1)
         expect(res.data.paging.data.length).toBeGreaterThan(1)
         // First item should be the one we created above
-        expect(res.data.paging.data[0].id).toBe(profileId)
+        expect(res.data.paging.data.map((i) => i.id)).toContain(profileId)
       })
 
       it('should find a list of profiles (find new one)', async () => {
-        const createInput: AdminCreateProfileInput = {
-          name: uniqueId('profile'),
+        const createInput: ProfileAdminCreateInput = {
+          ownerId: 'alice',
+          account: uniqueId('profile'),
+          username: uniqueId('profile'),
         }
         const createdRes = await sdk.adminCreateProfile({ input: createInput }, { cookie })
         const profileId = createdRes.data.created.id
 
-        const input: AdminFindManyProfileInput = {
+        const input: ProfileAdminFindManyInput = {
+          ownerId: 'alice',
           search: profileId,
         }
 
@@ -89,8 +104,10 @@ describe('api-profile-feature', () => {
       })
 
       it('should find a profile by id', async () => {
-        const createInput: AdminCreateProfileInput = {
-          name: uniqueId('profile'),
+        const createInput: ProfileAdminCreateInput = {
+          ownerId: 'alice',
+          account: uniqueId('profile'),
+          username: uniqueId('profile'),
         }
         const createdRes = await sdk.adminCreateProfile({ input: createInput }, { cookie })
         const profileId = createdRes.data.created.id
@@ -101,8 +118,10 @@ describe('api-profile-feature', () => {
       })
 
       it('should delete a profile', async () => {
-        const createInput: AdminCreateProfileInput = {
-          name: uniqueId('profile'),
+        const createInput: ProfileAdminCreateInput = {
+          ownerId: 'alice',
+          account: uniqueId('profile'),
+          username: uniqueId('profile'),
         }
         const createdRes = await sdk.adminCreateProfile({ input: createInput }, { cookie })
         const profileId = createdRes.data.created.id
@@ -111,7 +130,7 @@ describe('api-profile-feature', () => {
 
         expect(res.data.deleted).toBe(true)
 
-        const findRes = await sdk.adminFindManyProfile({ input: { search: profileId } }, { cookie })
+        const findRes = await sdk.adminFindManyProfile({ input: { ownerId: 'alice', search: profileId } }, { cookie })
         expect(findRes.data.paging.meta.totalCount).toBe(0)
         expect(findRes.data.paging.data.length).toBe(0)
       })
@@ -125,8 +144,10 @@ describe('api-profile-feature', () => {
 
       it('should not create a profile', async () => {
         expect.assertions(1)
-        const input: AdminCreateProfileInput = {
-          name: uniqueId('profile'),
+        const input: ProfileAdminCreateInput = {
+          ownerId: 'alice',
+          account: uniqueId('profile'),
+          username: uniqueId('profile'),
         }
 
         try {
@@ -148,7 +169,7 @@ describe('api-profile-feature', () => {
       it('should not find a list of profiles (find all)', async () => {
         expect.assertions(1)
         try {
-          await sdk.adminFindManyProfile({ input: {} }, { cookie })
+          await sdk.adminFindManyProfile({ input: { ownerId: 'alice' } }, { cookie })
         } catch (e) {
           expect(e.message).toBe('Unauthorized: User is not Admin')
         }

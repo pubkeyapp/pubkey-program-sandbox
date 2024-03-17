@@ -1,5 +1,5 @@
 import { Button, Group } from '@mantine/core'
-import { UiPageLimit, UiSearchField } from '@pubkey-program-sandbox/web-core-ui'
+import { UiSearchField } from '@pubkey-program-sandbox/web-core-ui'
 import { useUserFindManyProfile } from '@pubkey-program-sandbox/web-profile-data-access'
 import { ProfileUiGrid } from '@pubkey-program-sandbox/web-profile-ui'
 import { UiBack, UiDebugModal, UiInfo, UiLoader, UiPage } from '@pubkey-ui/core'

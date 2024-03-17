@@ -1,0 +1,24 @@
+query profileGetProgramAccount {
+  item: profileGetProgramAccount
+}
+query profileGetPointer($account: String!) {
+  item: profileGetPointer(account: $account)
+}
+query profileGetPointerPda($provider: PubKeyIdentityProvider!, $providerId: String!) {
+  item: profileGetPointerPda(provider: $provider, providerId: $providerId)
+}
+query profileGetPointers {
+  items: profileGetPointers
+}
+query profileGetProfile($account: String!) {
+  item: profileGetProfile(account: $account)
+}
+query profileGetProfileByUsername($username: String!) {
+  item: profileGetProfileByUsername(username: $username)
+}
+query profileGetProfilePda($username: String!) {
+  item: profileGetProfilePda(username: $username)
+}
+query profileGetProfiles {
+  items: profileGetProfiles
+}

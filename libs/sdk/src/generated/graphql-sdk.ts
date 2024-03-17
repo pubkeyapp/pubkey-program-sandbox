@@ -273,6 +273,11 @@ export type ProfileUserUpdateInput = {
   username?: InputMaybe<Scalars['String']['input']>
 }
 
+export enum PubKeyIdentityProvider {
+  Discord = 'Discord',
+  Solana = 'Solana',
+}
+
 export type Query = {
   __typename?: 'Query'
   adminFindManyIdentity?: Maybe<Array<Identity>>
@@ -283,6 +288,14 @@ export type Query = {
   anonRequestIdentityChallenge?: Maybe<IdentityChallenge>
   appConfig: AppConfig
   me?: Maybe<User>
+  profileGetPointer?: Maybe<Scalars['JSON']['output']>
+  profileGetPointerPda?: Maybe<Scalars['JSON']['output']>
+  profileGetPointers?: Maybe<Scalars['JSON']['output']>
+  profileGetProfile?: Maybe<Scalars['JSON']['output']>
+  profileGetProfileByUsername?: Maybe<Scalars['JSON']['output']>
+  profileGetProfilePda?: Maybe<Scalars['JSON']['output']>
+  profileGetProfiles?: Maybe<Scalars['JSON']['output']>
+  profileGetProgramAccount?: Maybe<Scalars['JSON']['output']>
   uptime: Scalars['Float']['output']
   userFindManyIdentity?: Maybe<Array<Identity>>
   userFindManyProfile: ProfilePaging
@@ -315,6 +328,27 @@ export type QueryAdminFindOneUserArgs = {
 
 export type QueryAnonRequestIdentityChallengeArgs = {
   input: IdentityRequestChallengeInput
+}
+
+export type QueryProfileGetPointerArgs = {
+  account: Scalars['String']['input']
+}
+
+export type QueryProfileGetPointerPdaArgs = {
+  provider: PubKeyIdentityProvider
+  providerId: Scalars['String']['input']
+}
+
+export type QueryProfileGetProfileArgs = {
+  account: Scalars['String']['input']
+}
+
+export type QueryProfileGetProfileByUsernameArgs = {
+  username: Scalars['String']['input']
+}
+
+export type QueryProfileGetProfilePdaArgs = {
+  username: Scalars['String']['input']
 }
 
 export type QueryUserFindManyIdentityArgs = {
@@ -760,6 +794,49 @@ export type AnonVerifyIdentityChallengeMutation = {
     verified: boolean
   } | null
 }
+
+export type ProfileGetProgramAccountQueryVariables = Exact<{ [key: string]: never }>
+
+export type ProfileGetProgramAccountQuery = { __typename?: 'Query'; item?: any | null }
+
+export type ProfileGetPointerQueryVariables = Exact<{
+  account: Scalars['String']['input']
+}>
+
+export type ProfileGetPointerQuery = { __typename?: 'Query'; item?: any | null }
+
+export type ProfileGetPointerPdaQueryVariables = Exact<{
+  provider: PubKeyIdentityProvider
+  providerId: Scalars['String']['input']
+}>
+
+export type ProfileGetPointerPdaQuery = { __typename?: 'Query'; item?: any | null }
+
+export type ProfileGetPointersQueryVariables = Exact<{ [key: string]: never }>
+
+export type ProfileGetPointersQuery = { __typename?: 'Query'; items?: any | null }
+
+export type ProfileGetProfileQueryVariables = Exact<{
+  account: Scalars['String']['input']
+}>
+
+export type ProfileGetProfileQuery = { __typename?: 'Query'; item?: any | null }
+
+export type ProfileGetProfileByUsernameQueryVariables = Exact<{
+  username: Scalars['String']['input']
+}>
+
+export type ProfileGetProfileByUsernameQuery = { __typename?: 'Query'; item?: any | null }
+
+export type ProfileGetProfilePdaQueryVariables = Exact<{
+  username: Scalars['String']['input']
+}>
+
+export type ProfileGetProfilePdaQuery = { __typename?: 'Query'; item?: any | null }
+
+export type ProfileGetProfilesQueryVariables = Exact<{ [key: string]: never }>
+
+export type ProfileGetProfilesQuery = { __typename?: 'Query'; items?: any | null }
 
 export type ProfileDetailsFragment = {
   __typename?: 'Profile'
@@ -1360,6 +1437,46 @@ export const AnonVerifyIdentityChallengeDocument = gql`
   }
   ${IdentityChallengeDetailsFragmentDoc}
 `
+export const ProfileGetProgramAccountDocument = gql`
+  query profileGetProgramAccount {
+    item: profileGetProgramAccount
+  }
+`
+export const ProfileGetPointerDocument = gql`
+  query profileGetPointer($account: String!) {
+    item: profileGetPointer(account: $account)
+  }
+`
+export const ProfileGetPointerPdaDocument = gql`
+  query profileGetPointerPda($provider: PubKeyIdentityProvider!, $providerId: String!) {
+    item: profileGetPointerPda(provider: $provider, providerId: $providerId)
+  }
+`
+export const ProfileGetPointersDocument = gql`
+  query profileGetPointers {
+    items: profileGetPointers
+  }
+`
+export const ProfileGetProfileDocument = gql`
+  query profileGetProfile($account: String!) {
+    item: profileGetProfile(account: $account)
+  }
+`
+export const ProfileGetProfileByUsernameDocument = gql`
+  query profileGetProfileByUsername($username: String!) {
+    item: profileGetProfileByUsername(username: $username)
+  }
+`
+export const ProfileGetProfilePdaDocument = gql`
+  query profileGetProfilePda($username: String!) {
+    item: profileGetProfilePda(username: $username)
+  }
+`
+export const ProfileGetProfilesDocument = gql`
+  query profileGetProfiles {
+    items: profileGetProfiles
+  }
+`
 export const AdminFindManyProfileDocument = gql`
   query adminFindManyProfile($input: ProfileAdminFindManyInput!) {
     paging: adminFindManyProfile(input: $input) {
@@ -1553,6 +1670,14 @@ const UserVerifyIdentityChallengeDocumentString = print(UserVerifyIdentityChalle
 const UserLinkIdentityDocumentString = print(UserLinkIdentityDocument)
 const AnonRequestIdentityChallengeDocumentString = print(AnonRequestIdentityChallengeDocument)
 const AnonVerifyIdentityChallengeDocumentString = print(AnonVerifyIdentityChallengeDocument)
+const ProfileGetProgramAccountDocumentString = print(ProfileGetProgramAccountDocument)
+const ProfileGetPointerDocumentString = print(ProfileGetPointerDocument)
+const ProfileGetPointerPdaDocumentString = print(ProfileGetPointerPdaDocument)
+const ProfileGetPointersDocumentString = print(ProfileGetPointersDocument)
+const ProfileGetProfileDocumentString = print(ProfileGetProfileDocument)
+const ProfileGetProfileByUsernameDocumentString = print(ProfileGetProfileByUsernameDocument)
+const ProfileGetProfilePdaDocumentString = print(ProfileGetProfilePdaDocument)
+const ProfileGetProfilesDocumentString = print(ProfileGetProfilesDocument)
 const AdminFindManyProfileDocumentString = print(AdminFindManyProfileDocument)
 const AdminFindOneProfileDocumentString = print(AdminFindOneProfileDocument)
 const AdminCreateProfileDocumentString = print(AdminCreateProfileDocument)
@@ -1874,6 +1999,174 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
           }),
         'anonVerifyIdentityChallenge',
         'mutation',
+        variables,
+      )
+    },
+    profileGetProgramAccount(
+      variables?: ProfileGetProgramAccountQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: ProfileGetProgramAccountQuery
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<ProfileGetProgramAccountQuery>(ProfileGetProgramAccountDocumentString, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'profileGetProgramAccount',
+        'query',
+        variables,
+      )
+    },
+    profileGetPointer(
+      variables: ProfileGetPointerQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: ProfileGetPointerQuery
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<ProfileGetPointerQuery>(ProfileGetPointerDocumentString, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'profileGetPointer',
+        'query',
+        variables,
+      )
+    },
+    profileGetPointerPda(
+      variables: ProfileGetPointerPdaQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: ProfileGetPointerPdaQuery
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<ProfileGetPointerPdaQuery>(ProfileGetPointerPdaDocumentString, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'profileGetPointerPda',
+        'query',
+        variables,
+      )
+    },
+    profileGetPointers(
+      variables?: ProfileGetPointersQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: ProfileGetPointersQuery
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<ProfileGetPointersQuery>(ProfileGetPointersDocumentString, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'profileGetPointers',
+        'query',
+        variables,
+      )
+    },
+    profileGetProfile(
+      variables: ProfileGetProfileQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: ProfileGetProfileQuery
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<ProfileGetProfileQuery>(ProfileGetProfileDocumentString, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'profileGetProfile',
+        'query',
+        variables,
+      )
+    },
+    profileGetProfileByUsername(
+      variables: ProfileGetProfileByUsernameQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: ProfileGetProfileByUsernameQuery
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<ProfileGetProfileByUsernameQuery>(ProfileGetProfileByUsernameDocumentString, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'profileGetProfileByUsername',
+        'query',
+        variables,
+      )
+    },
+    profileGetProfilePda(
+      variables: ProfileGetProfilePdaQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: ProfileGetProfilePdaQuery
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<ProfileGetProfilePdaQuery>(ProfileGetProfilePdaDocumentString, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'profileGetProfilePda',
+        'query',
+        variables,
+      )
+    },
+    profileGetProfiles(
+      variables?: ProfileGetProfilesQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: ProfileGetProfilesQuery
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<ProfileGetProfilesQuery>(ProfileGetProfilesDocumentString, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'profileGetProfiles',
+        'query',
         variables,
       )
     },
@@ -2291,6 +2584,8 @@ export const isDefinedNonNullAny = (v: any): v is definedNonNullAny => v !== und
 export const definedNonNullAnySchema = z.any().refine((v) => isDefinedNonNullAny(v))
 
 export const IdentityProviderSchema = z.nativeEnum(IdentityProvider)
+
+export const PubKeyIdentityProviderSchema = z.nativeEnum(PubKeyIdentityProvider)
 
 export const UserRoleSchema = z.nativeEnum(UserRole)
 

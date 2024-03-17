@@ -1,4 +1,5 @@
-import { Field, ObjectType } from '@nestjs/graphql'
+import { Field, ObjectType, registerEnumType } from '@nestjs/graphql'
+import { PubKeyIdentityProvider } from '@pubkey-program-library/anchor'
 import { PagingResponse } from '@pubkey-program-sandbox/api-core-data-access'
 
 import { User } from '@pubkey-program-sandbox/api-user-data-access'
@@ -26,3 +27,6 @@ export class Profile {
 
 @ObjectType()
 export class ProfilePaging extends PagingResponse<Profile>(Profile) {}
+
+export { PubKeyIdentityProvider }
+registerEnumType(PubKeyIdentityProvider, { name: 'PubKeyIdentityProvider' })
