@@ -57,6 +57,8 @@ export interface ApiCoreConfig {
   jwtSecret: string
   port: number
   sessionSecret: string
+  solanaEndpoint: string
+  solanaEndpointPublic: string
   webUrl: string
 }
 
@@ -93,6 +95,8 @@ export function configuration(): ApiCoreConfig {
     jwtSecret: process.env['JWT_SECRET'] as string,
     port: parseInt(process.env['PORT'] as string, 10) || 3000,
     sessionSecret: process.env['SESSION_SECRET'] as string,
+    solanaEndpoint: process.env['SOLANA_ENDPOINT'] as string,
+    solanaEndpointPublic: process.env['SOLANA_ENDPOINT_PUBLIC'] as string,
     webUrl: WEB_URL,
   }
 }

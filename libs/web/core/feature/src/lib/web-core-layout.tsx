@@ -6,7 +6,6 @@ import {
   SolanaUiAccountBalanceButton,
   SolanaUiAccountChecker,
   SolanaUiClusterChecker,
-  SolanaUiClusterSelect,
   WalletIcon,
 } from '@pubkey-program-sandbox/web-solana-ui'
 import { UiHeader, UiLayout, UiLoader } from '@pubkey-ui/core'
@@ -28,7 +27,6 @@ export function WebCoreLayout({ children }: { children: ReactNode }) {
           profile={
             <Group gap="xs">
               <SolanaUiAccountBalanceButton />
-              <SolanaUiClusterSelect />
               <WalletIcon />
               <UiHeaderProfile user={user} logout={logout} />
             </Group>

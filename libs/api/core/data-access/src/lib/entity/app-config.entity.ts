@@ -16,4 +16,6 @@ export class AppConfig {
   authSolanaEnabled!: boolean
   @Field()
   authTwitterEnabled!: boolean
+  @Field()
+  solanaEndpoint!: string
 }

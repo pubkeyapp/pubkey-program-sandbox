@@ -43,5 +43,7 @@ export const validationSchema = Joi.object({
   NODE_ENV: Joi.string().valid('development', 'production', 'test', 'provision').default('development'),
   PORT: Joi.number().default(3000),
   SESSION_SECRET: Joi.string().required(),
+  SOLANA_ENDPOINT: Joi.string().required().error(new Error(`SOLANA_ENDPOINT is required.`)),
+  SOLANA_ENDPOINT_PUBLIC: Joi.string().default(process.env['SOLANA_ENDPOINT']),
   SYNC_DRY_RUN: Joi.boolean().default(false),
 })

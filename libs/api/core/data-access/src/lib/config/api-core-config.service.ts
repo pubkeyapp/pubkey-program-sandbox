@@ -23,6 +23,7 @@ export class ApiCoreConfigService {
       authRegisterEnabled: this.authRegisterEnabled,
       authSolanaEnabled: this.authSolanaEnabled,
       authTwitterEnabled: this.authTwitterEnabled,
+      solanaEndpoint: this.solanaEndpointPublic,
     }
   }
 
@@ -228,6 +229,14 @@ export class ApiCoreConfigService {
 
   get sessionSecret() {
     return this.service.get<string>('sessionSecret') as string
+  }
+
+  get solanaEndpoint(): string {
+    return this.service.get<string>('solanaEndpoint') as string
+  }
+
+  get solanaEndpointPublic(): string {
+    return this.service.get<string>('solanaEndpointPublic') as string
   }
 
   get webUrl(): string {

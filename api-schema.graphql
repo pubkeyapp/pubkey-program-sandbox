@@ -10,6 +10,7 @@ type AppConfig {
   authRegisterEnabled: Boolean!
   authSolanaEnabled: Boolean!
   authTwitterEnabled: Boolean!
+  solanaEndpoint: String!
 }
 
 """

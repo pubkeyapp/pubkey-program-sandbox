@@ -33,6 +33,7 @@ export type AppConfig = {
   authRegisterEnabled: Scalars['Boolean']['output']
   authSolanaEnabled: Scalars['Boolean']['output']
   authTwitterEnabled: Scalars['Boolean']['output']
+  solanaEndpoint: Scalars['String']['output']
 }
 
 export type Identity = {
@@ -380,6 +381,7 @@ export type AppConfigDetailsFragment = {
   authRegisterEnabled: boolean
   authSolanaEnabled: boolean
   authTwitterEnabled: boolean
+  solanaEndpoint: string
 }
 
 export type PagingMetaDetailsFragment = {
@@ -410,6 +412,7 @@ export type AppConfigQuery = {
     authRegisterEnabled: boolean
     authSolanaEnabled: boolean
     authTwitterEnabled: boolean
+    solanaEndpoint: string
   }
 }
 
@@ -863,6 +866,7 @@ export const AppConfigDetailsFragmentDoc = gql`
     authRegisterEnabled
     authSolanaEnabled
     authTwitterEnabled
+    solanaEndpoint
   }
 `
 export const PagingMetaDetailsFragmentDoc = gql`
