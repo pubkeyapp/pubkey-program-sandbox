@@ -136,6 +136,7 @@ type Query {
   userFindManyUser(input: UserUserFindManyInput!): UserPaging!
   userFindOneUser(username: String!): User
   userRequestIdentityChallenge(input: IdentityRequestChallengeInput!): IdentityChallenge
+  userSolanaGetBalance(account: String!): String!
 }
 
 input RegisterInput {

@@ -203,6 +203,7 @@ export type Query = {
   userFindManyUser: UserPaging
   userFindOneUser?: Maybe<User>
   userRequestIdentityChallenge?: Maybe<IdentityChallenge>
+  userSolanaGetBalance: Scalars['String']['output']
 }
 
 export type QueryAdminFindManyIdentityArgs = {
@@ -235,6 +236,10 @@ export type QueryUserFindOneUserArgs = {
 
 export type QueryUserRequestIdentityChallengeArgs = {
   input: IdentityRequestChallengeInput
+}
+
+export type QueryUserSolanaGetBalanceArgs = {
+  account: Scalars['String']['input']
 }
 
 export type RegisterInput = {
@@ -653,6 +658,12 @@ export type AnonVerifyIdentityChallengeMutation = {
   } | null
 }
 
+export type UserSolanaGetBalanceQueryVariables = Exact<{
+  account: Scalars['String']['input']
+}>
+
+export type UserSolanaGetBalanceQuery = { __typename?: 'Query'; balance: string }
+
 export type UserDetailsFragment = {
   __typename?: 'User'
   avatarUrl?: string | null
@@ -1050,6 +1061,11 @@ export const AnonVerifyIdentityChallengeDocument = gql`
   }
   ${IdentityChallengeDetailsFragmentDoc}
 `
+export const UserSolanaGetBalanceDocument = gql`
+  query userSolanaGetBalance($account: String!) {
+    balance: userSolanaGetBalance(account: $account)
+  }
+`
 export const AdminCreateUserDocument = gql`
   mutation adminCreateUser($input: UserAdminCreateInput!) {
     created: adminCreateUser(input: $input) {
@@ -1152,6 +1168,7 @@ const UserVerifyIdentityChallengeDocumentString = print(UserVerifyIdentityChalle
 const UserLinkIdentityDocumentString = print(UserLinkIdentityDocument)
 const AnonRequestIdentityChallengeDocumentString = print(AnonRequestIdentityChallengeDocument)
 const AnonVerifyIdentityChallengeDocumentString = print(AnonVerifyIdentityChallengeDocument)
+const UserSolanaGetBalanceDocumentString = print(UserSolanaGetBalanceDocument)
 const AdminCreateUserDocumentString = print(AdminCreateUserDocument)
 const AdminDeleteUserDocumentString = print(AdminDeleteUserDocument)
 const AdminFindManyUserDocumentString = print(AdminFindManyUserDocument)
@@ -1462,6 +1479,27 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
           }),
         'anonVerifyIdentityChallenge',
         'mutation',
+        variables,
+      )
+    },
+    userSolanaGetBalance(
+      variables: UserSolanaGetBalanceQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: UserSolanaGetBalanceQuery
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<UserSolanaGetBalanceQuery>(UserSolanaGetBalanceDocumentString, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'userSolanaGetBalance',
+        'query',
         variables,
       )
     },
