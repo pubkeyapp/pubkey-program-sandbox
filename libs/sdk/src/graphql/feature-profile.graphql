@@ -1,0 +1,74 @@
+fragment ProfileDetails on Profile {
+  createdAt
+  id
+  account
+  username
+  ownerId
+  updatedAt
+}
+
+query adminFindManyProfile($input: ProfileAdminFindManyInput!) {
+  paging: adminFindManyProfile(input: $input) {
+    data {
+      ...ProfileDetails
+    }
+    meta {
+      ...PagingMetaDetails
+    }
+  }
+}
+
+query adminFindOneProfile($profileId: String!) {
+  item: adminFindOneProfile(profileId: $profileId) {
+    ...ProfileDetails
+  }
+}
+
+mutation adminCreateProfile($input: ProfileAdminCreateInput!) {
+  created: adminCreateProfile(input: $input) {
+    ...ProfileDetails
+  }
+}
+
+mutation adminUpdateProfile($profileId: String!, $input: ProfileAdminUpdateInput!) {
+  updated: adminUpdateProfile(profileId: $profileId, input: $input) {
+    ...ProfileDetails
+  }
+}
+
+mutation adminDeleteProfile($profileId: String!) {
+  deleted: adminDeleteProfile(profileId: $profileId)
+}
+
+query userFindManyProfile($input: ProfileUserFindManyInput!) {
+  paging: userFindManyProfile(input: $input) {
+    data {
+      ...ProfileDetails
+    }
+    meta {
+      ...PagingMetaDetails
+    }
+  }
+}
+
+query userFindOneProfile($profileId: String!) {
+  item: userFindOneProfile(profileId: $profileId) {
+    ...ProfileDetails
+  }
+}
+
+mutation userCreateProfile($input: ProfileUserCreateInput!) {
+  created: userCreateProfile(input: $input) {
+    ...ProfileDetails
+  }
+}
+
+mutation userUpdateProfile($profileId: String!, $input: ProfileUserUpdateInput!) {
+  updated: userUpdateProfile(profileId: $profileId, input: $input) {
+    ...ProfileDetails
+  }
+}
+
+mutation userDeleteProfile($profileId: String!) {
+  deleted: userDeleteProfile(profileId: $profileId)
+}

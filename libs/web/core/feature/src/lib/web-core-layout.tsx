@@ -22,6 +22,7 @@ export function WebCoreLayout({ children }: { children: ReactNode }) {
           toggle={toggle}
           links={[
             { link: '/dashboard', label: 'Dashboard' },
+            { link: '/profiles', label: 'Profiles' },
             { link: '/solana', label: 'Solana' },
           ]}
           profile={

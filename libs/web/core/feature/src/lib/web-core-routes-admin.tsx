@@ -1,3 +1,4 @@
+import { IconSettings } from '@tabler/icons-react'
 import { UiDashboard } from '@pubkey-program-sandbox/web-core-ui'
 import { DevAdminRoutes } from '@pubkey-program-sandbox/web-dev-feature'
 import { AdminUserFeature } from '@pubkey-program-sandbox/web-user-feature'

@@ -6,6 +6,7 @@ import { ApiUserFeatureModule } from '@pubkey-program-sandbox/api-user-feature'
 import { ApiCoreController } from './api-core.controller'
 import { ApiCoreResolver } from './api-core.resolver'
 import { ApiSolanaFeatureModule } from '@pubkey-program-sandbox/api-solana-feature'
+import { ApiProfileFeatureModule } from '@pubkey-program-sandbox/api-profile-feature'
 
 const imports = [
   // The api-feature generator will add the imports here
@@ -14,6 +15,7 @@ const imports = [
   ApiIdentityFeatureModule,
   ApiUserFeatureModule,
   ApiSolanaFeatureModule,
+  ApiProfileFeatureModule,
 ]
 
 @Module({

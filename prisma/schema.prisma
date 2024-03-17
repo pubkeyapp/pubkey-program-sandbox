@@ -39,6 +39,16 @@ model IdentityChallenge {
   providerId String
 }
 
+model Profile {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  account   String
+  username  String
+  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId   String
+}
+
 model User {
   id         String     @id @default(cuid())
   createdAt  DateTime   @default(now())
@@ -51,6 +61,7 @@ model User {
   status     UserStatus @default(Created)
   username   String     @unique
   identities Identity[]
+  profiles   Profile[]
 }
 
 enum IdentityProvider {

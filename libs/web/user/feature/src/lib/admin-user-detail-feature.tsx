@@ -4,6 +4,7 @@ import { UiBack, UiDebugModal, UiError, UiLoader, UiPage, UiTabRoute, UiTabRoute
 import { useParams } from 'react-router-dom'
 import { AdminUserDetailFeatureIdentities } from './admin-user-detail-feature-identities'
 import { AdminUserDetailFeatureSettings } from './admin-user-detail-feature-settings'
+import { AdminProfileFeature } from '@pubkey-program-sandbox/web-profile-feature'
 
 export default function AdminUserDetailFeature() {
   const { userId } = useParams<{ userId: string }>() as { userId: string }
@@ -27,6 +28,7 @@ export default function AdminUserDetailFeature() {
       label: 'Identities',
       element: <AdminUserDetailFeatureIdentities userId={userId} />,
     },
+    { path: 'profiles', label: 'Profiles', element: <AdminProfileFeature ownerId={userId} /> },
   ]
   return (
     <UiPage leftAction={<UiBack />} rightAction={<UiDebugModal data={item} />} title={<UserUiItem user={item} />}>

@@ -100,16 +100,22 @@ input LoginInput {
 
 type Mutation {
   adminCreateIdentity(input: IdentityAdminCreateInput!): Identity
+  adminCreateProfile(input: ProfileAdminCreateInput!): Profile
   adminCreateUser(input: UserAdminCreateInput!): User
   adminDeleteIdentity(identityId: String!): Boolean
+  adminDeleteProfile(profileId: String!): Boolean
   adminDeleteUser(userId: String!): Boolean
+  adminUpdateProfile(input: ProfileAdminUpdateInput!, profileId: String!): Profile
   adminUpdateUser(input: UserAdminUpdateInput!, userId: String!): User
   anonVerifyIdentityChallenge(input: IdentityVerifyChallengeInput!): IdentityChallenge
   login(input: LoginInput!): User
   logout: Boolean
   register(input: RegisterInput!): User
+  userCreateProfile(input: ProfileUserCreateInput!): Profile
   userDeleteIdentity(identityId: String!): Boolean
+  userDeleteProfile(profileId: String!): Boolean
   userLinkIdentity(input: IdentityUserLinkInput!): Identity
+  userUpdateProfile(input: ProfileUserUpdateInput!, profileId: String!): Profile
   userUpdateUser(input: UserUserUpdateInput!): User
   userVerifyIdentityChallenge(input: IdentityVerifyChallengeInput!): IdentityChallenge
 }
@@ -124,16 +130,69 @@ type PagingMeta {
   totalCount: Int
 }
 
+type Profile {
+  account: String!
+  createdAt: DateTime
+  id: String!
+  owner: User
+  ownerId: String!
+  updatedAt: DateTime
+  username: String!
+}
+
+input ProfileAdminCreateInput {
+  account: String!
+  ownerId: String!
+  username: String!
+}
+
+input ProfileAdminFindManyInput {
+  limit: Int = 10
+  ownerId: String!
+  page: Int = 1
+  search: String
+}
+
+input ProfileAdminUpdateInput {
+  account: String
+  username: String
+}
+
+type ProfilePaging {
+  data: [Profile!]!
+  meta: PagingMeta!
+}
+
+input ProfileUserCreateInput {
+  account: String!
+  username: String!
+}
+
+input ProfileUserFindManyInput {
+  limit: Int = 10
+  page: Int = 1
+  search: String
+}
+
+input ProfileUserUpdateInput {
+  account: String
+  username: String
+}
+
 type Query {
   adminFindManyIdentity(input: IdentityAdminFindManyInput!): [Identity!]
+  adminFindManyProfile(input: ProfileAdminFindManyInput!): ProfilePaging!
   adminFindManyUser(input: UserAdminFindManyInput!): UserPaging!
+  adminFindOneProfile(profileId: String!): Profile
   adminFindOneUser(userId: String!): User
   anonRequestIdentityChallenge(input: IdentityRequestChallengeInput!): IdentityChallenge
   appConfig: AppConfig!
   me: User
   uptime: Float!
   userFindManyIdentity(input: IdentityUserFindManyInput!): [Identity!]
+  userFindManyProfile(input: ProfileUserFindManyInput!): ProfilePaging!
   userFindManyUser(input: UserUserFindManyInput!): UserPaging!
+  userFindOneProfile(profileId: String!): Profile
   userFindOneUser(username: String!): User
   userRequestIdentityChallenge(input: IdentityRequestChallengeInput!): IdentityChallenge
   userSolanaGetBalance(account: String!): String!

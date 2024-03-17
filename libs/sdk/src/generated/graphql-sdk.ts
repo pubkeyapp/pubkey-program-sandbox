@@ -116,22 +116,32 @@ export type LoginInput = {
 export type Mutation = {
   __typename?: 'Mutation'
   adminCreateIdentity?: Maybe<Identity>
+  adminCreateProfile?: Maybe<Profile>
   adminCreateUser?: Maybe<User>
   adminDeleteIdentity?: Maybe<Scalars['Boolean']['output']>
+  adminDeleteProfile?: Maybe<Scalars['Boolean']['output']>
   adminDeleteUser?: Maybe<Scalars['Boolean']['output']>
+  adminUpdateProfile?: Maybe<Profile>
   adminUpdateUser?: Maybe<User>
   anonVerifyIdentityChallenge?: Maybe<IdentityChallenge>
   login?: Maybe<User>
   logout?: Maybe<Scalars['Boolean']['output']>
   register?: Maybe<User>
+  userCreateProfile?: Maybe<Profile>
   userDeleteIdentity?: Maybe<Scalars['Boolean']['output']>
+  userDeleteProfile?: Maybe<Scalars['Boolean']['output']>
   userLinkIdentity?: Maybe<Identity>
+  userUpdateProfile?: Maybe<Profile>
   userUpdateUser?: Maybe<User>
   userVerifyIdentityChallenge?: Maybe<IdentityChallenge>
 }
 
 export type MutationAdminCreateIdentityArgs = {
   input: IdentityAdminCreateInput
+}
+
+export type MutationAdminCreateProfileArgs = {
+  input: ProfileAdminCreateInput
 }
 
 export type MutationAdminCreateUserArgs = {
@@ -142,8 +152,17 @@ export type MutationAdminDeleteIdentityArgs = {
   identityId: Scalars['String']['input']
 }
 
+export type MutationAdminDeleteProfileArgs = {
+  profileId: Scalars['String']['input']
+}
+
 export type MutationAdminDeleteUserArgs = {
   userId: Scalars['String']['input']
+}
+
+export type MutationAdminUpdateProfileArgs = {
+  input: ProfileAdminUpdateInput
+  profileId: Scalars['String']['input']
 }
 
 export type MutationAdminUpdateUserArgs = {
@@ -163,12 +182,25 @@ export type MutationRegisterArgs = {
   input: RegisterInput
 }
 
+export type MutationUserCreateProfileArgs = {
+  input: ProfileUserCreateInput
+}
+
 export type MutationUserDeleteIdentityArgs = {
   identityId: Scalars['String']['input']
 }
 
+export type MutationUserDeleteProfileArgs = {
+  profileId: Scalars['String']['input']
+}
+
 export type MutationUserLinkIdentityArgs = {
   input: IdentityUserLinkInput
+}
+
+export type MutationUserUpdateProfileArgs = {
+  input: ProfileUserUpdateInput
+  profileId: Scalars['String']['input']
 }
 
 export type MutationUserUpdateUserArgs = {
@@ -190,17 +222,72 @@ export type PagingMeta = {
   totalCount?: Maybe<Scalars['Int']['output']>
 }
 
+export type Profile = {
+  __typename?: 'Profile'
+  account: Scalars['String']['output']
+  createdAt?: Maybe<Scalars['DateTime']['output']>
+  id: Scalars['String']['output']
+  owner?: Maybe<User>
+  ownerId: Scalars['String']['output']
+  updatedAt?: Maybe<Scalars['DateTime']['output']>
+  username: Scalars['String']['output']
+}
+
+export type ProfileAdminCreateInput = {
+  account: Scalars['String']['input']
+  ownerId: Scalars['String']['input']
+  username: Scalars['String']['input']
+}
+
+export type ProfileAdminFindManyInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>
+  ownerId: Scalars['String']['input']
+  page?: InputMaybe<Scalars['Int']['input']>
+  search?: InputMaybe<Scalars['String']['input']>
+}
+
+export type ProfileAdminUpdateInput = {
+  account?: InputMaybe<Scalars['String']['input']>
+  username?: InputMaybe<Scalars['String']['input']>
+}
+
+export type ProfilePaging = {
+  __typename?: 'ProfilePaging'
+  data: Array<Profile>
+  meta: PagingMeta
+}
+
+export type ProfileUserCreateInput = {
+  account: Scalars['String']['input']
+  username: Scalars['String']['input']
+}
+
+export type ProfileUserFindManyInput = {
+  limit?: InputMaybe<Scalars['Int']['input']>
+  page?: InputMaybe<Scalars['Int']['input']>
+  search?: InputMaybe<Scalars['String']['input']>
+}
+
+export type ProfileUserUpdateInput = {
+  account?: InputMaybe<Scalars['String']['input']>
+  username?: InputMaybe<Scalars['String']['input']>
+}
+
 export type Query = {
   __typename?: 'Query'
   adminFindManyIdentity?: Maybe<Array<Identity>>
+  adminFindManyProfile: ProfilePaging
   adminFindManyUser: UserPaging
+  adminFindOneProfile?: Maybe<Profile>
   adminFindOneUser?: Maybe<User>
   anonRequestIdentityChallenge?: Maybe<IdentityChallenge>
   appConfig: AppConfig
   me?: Maybe<User>
   uptime: Scalars['Float']['output']
   userFindManyIdentity?: Maybe<Array<Identity>>
+  userFindManyProfile: ProfilePaging
   userFindManyUser: UserPaging
+  userFindOneProfile?: Maybe<Profile>
   userFindOneUser?: Maybe<User>
   userRequestIdentityChallenge?: Maybe<IdentityChallenge>
   userSolanaGetBalance: Scalars['String']['output']
@@ -210,8 +297,16 @@ export type QueryAdminFindManyIdentityArgs = {
   input: IdentityAdminFindManyInput
 }
 
+export type QueryAdminFindManyProfileArgs = {
+  input: ProfileAdminFindManyInput
+}
+
 export type QueryAdminFindManyUserArgs = {
   input: UserAdminFindManyInput
+}
+
+export type QueryAdminFindOneProfileArgs = {
+  profileId: Scalars['String']['input']
 }
 
 export type QueryAdminFindOneUserArgs = {
@@ -226,8 +321,16 @@ export type QueryUserFindManyIdentityArgs = {
   input: IdentityUserFindManyInput
 }
 
+export type QueryUserFindManyProfileArgs = {
+  input: ProfileUserFindManyInput
+}
+
 export type QueryUserFindManyUserArgs = {
   input: UserUserFindManyInput
+}
+
+export type QueryUserFindOneProfileArgs = {
+  profileId: Scalars['String']['input']
 }
 
 export type QueryUserFindOneUserArgs = {
@@ -658,6 +761,192 @@ export type AnonVerifyIdentityChallengeMutation = {
   } | null
 }
 
+export type ProfileDetailsFragment = {
+  __typename?: 'Profile'
+  createdAt?: Date | null
+  id: string
+  account: string
+  username: string
+  ownerId: string
+  updatedAt?: Date | null
+}
+
+export type AdminFindManyProfileQueryVariables = Exact<{
+  input: ProfileAdminFindManyInput
+}>
+
+export type AdminFindManyProfileQuery = {
+  __typename?: 'Query'
+  paging: {
+    __typename?: 'ProfilePaging'
+    data: Array<{
+      __typename?: 'Profile'
+      createdAt?: Date | null
+      id: string
+      account: string
+      username: string
+      ownerId: string
+      updatedAt?: Date | null
+    }>
+    meta: {
+      __typename?: 'PagingMeta'
+      currentPage: number
+      isFirstPage: boolean
+      isLastPage: boolean
+      nextPage?: number | null
+      pageCount?: number | null
+      previousPage?: number | null
+      totalCount?: number | null
+    }
+  }
+}
+
+export type AdminFindOneProfileQueryVariables = Exact<{
+  profileId: Scalars['String']['input']
+}>
+
+export type AdminFindOneProfileQuery = {
+  __typename?: 'Query'
+  item?: {
+    __typename?: 'Profile'
+    createdAt?: Date | null
+    id: string
+    account: string
+    username: string
+    ownerId: string
+    updatedAt?: Date | null
+  } | null
+}
+
+export type AdminCreateProfileMutationVariables = Exact<{
+  input: ProfileAdminCreateInput
+}>
+
+export type AdminCreateProfileMutation = {
+  __typename?: 'Mutation'
+  created?: {
+    __typename?: 'Profile'
+    createdAt?: Date | null
+    id: string
+    account: string
+    username: string
+    ownerId: string
+    updatedAt?: Date | null
+  } | null
+}
+
+export type AdminUpdateProfileMutationVariables = Exact<{
+  profileId: Scalars['String']['input']
+  input: ProfileAdminUpdateInput
+}>
+
+export type AdminUpdateProfileMutation = {
+  __typename?: 'Mutation'
+  updated?: {
+    __typename?: 'Profile'
+    createdAt?: Date | null
+    id: string
+    account: string
+    username: string
+    ownerId: string
+    updatedAt?: Date | null
+  } | null
+}
+
+export type AdminDeleteProfileMutationVariables = Exact<{
+  profileId: Scalars['String']['input']
+}>
+
+export type AdminDeleteProfileMutation = { __typename?: 'Mutation'; deleted?: boolean | null }
+
+export type UserFindManyProfileQueryVariables = Exact<{
+  input: ProfileUserFindManyInput
+}>
+
+export type UserFindManyProfileQuery = {
+  __typename?: 'Query'
+  paging: {
+    __typename?: 'ProfilePaging'
+    data: Array<{
+      __typename?: 'Profile'
+      createdAt?: Date | null
+      id: string
+      account: string
+      username: string
+      ownerId: string
+      updatedAt?: Date | null
+    }>
+    meta: {
+      __typename?: 'PagingMeta'
+      currentPage: number
+      isFirstPage: boolean
+      isLastPage: boolean
+      nextPage?: number | null
+      pageCount?: number | null
+      previousPage?: number | null
+      totalCount?: number | null
+    }
+  }
+}
+
+export type UserFindOneProfileQueryVariables = Exact<{
+  profileId: Scalars['String']['input']
+}>
+
+export type UserFindOneProfileQuery = {
+  __typename?: 'Query'
+  item?: {
+    __typename?: 'Profile'
+    createdAt?: Date | null
+    id: string
+    account: string
+    username: string
+    ownerId: string
+    updatedAt?: Date | null
+  } | null
+}
+
+export type UserCreateProfileMutationVariables = Exact<{
+  input: ProfileUserCreateInput
+}>
+
+export type UserCreateProfileMutation = {
+  __typename?: 'Mutation'
+  created?: {
+    __typename?: 'Profile'
+    createdAt?: Date | null
+    id: string
+    account: string
+    username: string
+    ownerId: string
+    updatedAt?: Date | null
+  } | null
+}
+
+export type UserUpdateProfileMutationVariables = Exact<{
+  profileId: Scalars['String']['input']
+  input: ProfileUserUpdateInput
+}>
+
+export type UserUpdateProfileMutation = {
+  __typename?: 'Mutation'
+  updated?: {
+    __typename?: 'Profile'
+    createdAt?: Date | null
+    id: string
+    account: string
+    username: string
+    ownerId: string
+    updatedAt?: Date | null
+  } | null
+}
+
+export type UserDeleteProfileMutationVariables = Exact<{
+  profileId: Scalars['String']['input']
+}>
+
+export type UserDeleteProfileMutation = { __typename?: 'Mutation'; deleted?: boolean | null }
+
 export type UserSolanaGetBalanceQueryVariables = Exact<{
   account: Scalars['String']['input']
 }>
@@ -923,6 +1212,16 @@ export const IdentityChallengeDetailsFragmentDoc = gql`
     verified
   }
 `
+export const ProfileDetailsFragmentDoc = gql`
+  fragment ProfileDetails on Profile {
+    createdAt
+    id
+    account
+    username
+    ownerId
+    updatedAt
+  }
+`
 export const UserDetailsFragmentDoc = gql`
   fragment UserDetails on User {
     avatarUrl
@@ -1061,6 +1360,92 @@ export const AnonVerifyIdentityChallengeDocument = gql`
   }
   ${IdentityChallengeDetailsFragmentDoc}
 `
+export const AdminFindManyProfileDocument = gql`
+  query adminFindManyProfile($input: ProfileAdminFindManyInput!) {
+    paging: adminFindManyProfile(input: $input) {
+      data {
+        ...ProfileDetails
+      }
+      meta {
+        ...PagingMetaDetails
+      }
+    }
+  }
+  ${ProfileDetailsFragmentDoc}
+  ${PagingMetaDetailsFragmentDoc}
+`
+export const AdminFindOneProfileDocument = gql`
+  query adminFindOneProfile($profileId: String!) {
+    item: adminFindOneProfile(profileId: $profileId) {
+      ...ProfileDetails
+    }
+  }
+  ${ProfileDetailsFragmentDoc}
+`
+export const AdminCreateProfileDocument = gql`
+  mutation adminCreateProfile($input: ProfileAdminCreateInput!) {
+    created: adminCreateProfile(input: $input) {
+      ...ProfileDetails
+    }
+  }
+  ${ProfileDetailsFragmentDoc}
+`
+export const AdminUpdateProfileDocument = gql`
+  mutation adminUpdateProfile($profileId: String!, $input: ProfileAdminUpdateInput!) {
+    updated: adminUpdateProfile(profileId: $profileId, input: $input) {
+      ...ProfileDetails
+    }
+  }
+  ${ProfileDetailsFragmentDoc}
+`
+export const AdminDeleteProfileDocument = gql`
+  mutation adminDeleteProfile($profileId: String!) {
+    deleted: adminDeleteProfile(profileId: $profileId)
+  }
+`
+export const UserFindManyProfileDocument = gql`
+  query userFindManyProfile($input: ProfileUserFindManyInput!) {
+    paging: userFindManyProfile(input: $input) {
+      data {
+        ...ProfileDetails
+      }
+      meta {
+        ...PagingMetaDetails
+      }
+    }
+  }
+  ${ProfileDetailsFragmentDoc}
+  ${PagingMetaDetailsFragmentDoc}
+`
+export const UserFindOneProfileDocument = gql`
+  query userFindOneProfile($profileId: String!) {
+    item: userFindOneProfile(profileId: $profileId) {
+      ...ProfileDetails
+    }
+  }
+  ${ProfileDetailsFragmentDoc}
+`
+export const UserCreateProfileDocument = gql`
+  mutation userCreateProfile($input: ProfileUserCreateInput!) {
+    created: userCreateProfile(input: $input) {
+      ...ProfileDetails
+    }
+  }
+  ${ProfileDetailsFragmentDoc}
+`
+export const UserUpdateProfileDocument = gql`
+  mutation userUpdateProfile($profileId: String!, $input: ProfileUserUpdateInput!) {
+    updated: userUpdateProfile(profileId: $profileId, input: $input) {
+      ...ProfileDetails
+    }
+  }
+  ${ProfileDetailsFragmentDoc}
+`
+export const UserDeleteProfileDocument = gql`
+  mutation userDeleteProfile($profileId: String!) {
+    deleted: userDeleteProfile(profileId: $profileId)
+  }
+`
 export const UserSolanaGetBalanceDocument = gql`
   query userSolanaGetBalance($account: String!) {
     balance: userSolanaGetBalance(account: $account)
@@ -1168,6 +1553,16 @@ const UserVerifyIdentityChallengeDocumentString = print(UserVerifyIdentityChalle
 const UserLinkIdentityDocumentString = print(UserLinkIdentityDocument)
 const AnonRequestIdentityChallengeDocumentString = print(AnonRequestIdentityChallengeDocument)
 const AnonVerifyIdentityChallengeDocumentString = print(AnonVerifyIdentityChallengeDocument)
+const AdminFindManyProfileDocumentString = print(AdminFindManyProfileDocument)
+const AdminFindOneProfileDocumentString = print(AdminFindOneProfileDocument)
+const AdminCreateProfileDocumentString = print(AdminCreateProfileDocument)
+const AdminUpdateProfileDocumentString = print(AdminUpdateProfileDocument)
+const AdminDeleteProfileDocumentString = print(AdminDeleteProfileDocument)
+const UserFindManyProfileDocumentString = print(UserFindManyProfileDocument)
+const UserFindOneProfileDocumentString = print(UserFindOneProfileDocument)
+const UserCreateProfileDocumentString = print(UserCreateProfileDocument)
+const UserUpdateProfileDocumentString = print(UserUpdateProfileDocument)
+const UserDeleteProfileDocumentString = print(UserDeleteProfileDocument)
 const UserSolanaGetBalanceDocumentString = print(UserSolanaGetBalanceDocument)
 const AdminCreateUserDocumentString = print(AdminCreateUserDocument)
 const AdminDeleteUserDocumentString = print(AdminDeleteUserDocument)
@@ -1482,6 +1877,216 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
         variables,
       )
     },
+    adminFindManyProfile(
+      variables: AdminFindManyProfileQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: AdminFindManyProfileQuery
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<AdminFindManyProfileQuery>(AdminFindManyProfileDocumentString, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'adminFindManyProfile',
+        'query',
+        variables,
+      )
+    },
+    adminFindOneProfile(
+      variables: AdminFindOneProfileQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: AdminFindOneProfileQuery
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<AdminFindOneProfileQuery>(AdminFindOneProfileDocumentString, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'adminFindOneProfile',
+        'query',
+        variables,
+      )
+    },
+    adminCreateProfile(
+      variables: AdminCreateProfileMutationVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: AdminCreateProfileMutation
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<AdminCreateProfileMutation>(AdminCreateProfileDocumentString, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'adminCreateProfile',
+        'mutation',
+        variables,
+      )
+    },
+    adminUpdateProfile(
+      variables: AdminUpdateProfileMutationVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: AdminUpdateProfileMutation
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<AdminUpdateProfileMutation>(AdminUpdateProfileDocumentString, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'adminUpdateProfile',
+        'mutation',
+        variables,
+      )
+    },
+    adminDeleteProfile(
+      variables: AdminDeleteProfileMutationVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: AdminDeleteProfileMutation
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<AdminDeleteProfileMutation>(AdminDeleteProfileDocumentString, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'adminDeleteProfile',
+        'mutation',
+        variables,
+      )
+    },
+    userFindManyProfile(
+      variables: UserFindManyProfileQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: UserFindManyProfileQuery
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<UserFindManyProfileQuery>(UserFindManyProfileDocumentString, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'userFindManyProfile',
+        'query',
+        variables,
+      )
+    },
+    userFindOneProfile(
+      variables: UserFindOneProfileQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: UserFindOneProfileQuery
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<UserFindOneProfileQuery>(UserFindOneProfileDocumentString, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'userFindOneProfile',
+        'query',
+        variables,
+      )
+    },
+    userCreateProfile(
+      variables: UserCreateProfileMutationVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: UserCreateProfileMutation
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<UserCreateProfileMutation>(UserCreateProfileDocumentString, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'userCreateProfile',
+        'mutation',
+        variables,
+      )
+    },
+    userUpdateProfile(
+      variables: UserUpdateProfileMutationVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: UserUpdateProfileMutation
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<UserUpdateProfileMutation>(UserUpdateProfileDocumentString, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'userUpdateProfile',
+        'mutation',
+        variables,
+      )
+    },
+    userDeleteProfile(
+      variables: UserDeleteProfileMutationVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<{
+      data: UserDeleteProfileMutation
+      errors?: GraphQLError[]
+      extensions?: any
+      headers: Headers
+      status: number
+    }> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.rawRequest<UserDeleteProfileMutation>(UserDeleteProfileDocumentString, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'userDeleteProfile',
+        'mutation',
+        variables,
+      )
+    },
     userSolanaGetBalance(
       variables: UserSolanaGetBalanceQueryVariables,
       requestHeaders?: GraphQLClientRequestHeaders,
@@ -1740,6 +2345,52 @@ export function LoginInputSchema(): z.ZodObject<Properties<LoginInput>> {
   return z.object({
     password: z.string(),
     username: z.string(),
+  })
+}
+
+export function ProfileAdminCreateInputSchema(): z.ZodObject<Properties<ProfileAdminCreateInput>> {
+  return z.object({
+    account: z.string(),
+    ownerId: z.string(),
+    username: z.string(),
+  })
+}
+
+export function ProfileAdminFindManyInputSchema(): z.ZodObject<Properties<ProfileAdminFindManyInput>> {
+  return z.object({
+    limit: z.number().nullish(),
+    ownerId: z.string(),
+    page: z.number().nullish(),
+    search: z.string().nullish(),
+  })
+}
+
+export function ProfileAdminUpdateInputSchema(): z.ZodObject<Properties<ProfileAdminUpdateInput>> {
+  return z.object({
+    account: z.string().nullish(),
+    username: z.string().nullish(),
+  })
+}
+
+export function ProfileUserCreateInputSchema(): z.ZodObject<Properties<ProfileUserCreateInput>> {
+  return z.object({
+    account: z.string(),
+    username: z.string(),
+  })
+}
+
+export function ProfileUserFindManyInputSchema(): z.ZodObject<Properties<ProfileUserFindManyInput>> {
+  return z.object({
+    limit: z.number().nullish(),
+    page: z.number().nullish(),
+    search: z.string().nullish(),
+  })
+}
+
+export function ProfileUserUpdateInputSchema(): z.ZodObject<Properties<ProfileUserUpdateInput>> {
+  return z.object({
+    account: z.string().nullish(),
+    username: z.string().nullish(),
   })
 }
 
